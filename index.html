@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Força Diesel — Mecânica Especializada em Diesel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d0f; --bg2:#121518; --surface:#181c20; --line:rgba(255,255,255,.08);
+  --text:#eef0f1; --muted:#9aa3ab; --accent:#ff5a1f; --accent2:#ffb259;
+  --steel:#3a4249;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px);}
+*,*::before,*::after{box-sizing:inherit;}
+body{margin:0; background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;}
+body::after{content:""; position:fixed; inset:0; z-index:300; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+h1,h2,h3{font-family:'Oswald',Impact,sans-serif; text-transform:uppercase; letter-spacing:.01em; margin:0; line-height:1.05;}
+p{color:var(--muted); line-height:1.6; margin:0;}
+a{color:inherit; text-decoration:none;}
+section{position:relative;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; font-family:'Oswald'; font-size:12px; letter-spacing:.2em; color:var(--accent); text-transform:uppercase; margin-bottom:14px;}
+.eyebrow::before{content:""; width:22px; height:2px; background:var(--accent);}
+.btn{display:inline-flex; align-items:center; gap:10px; padding:14px 28px; font-family:'Oswald'; font-size:14px; letter-spacing:.06em; text-transform:uppercase; border-radius:2px; transition:transform .25s ease, box-shadow .25s ease, background .25s ease; cursor:pointer; border:none;}
+.btn-primary{background:var(--accent); color:#0b0d0f; box-shadow:0 8px 24px -8px rgba(255,90,31,.6);}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 30px -8px rgba(255,90,31,.75);}
+.btn-primary:active{transform:translateY(0) scale(.97);}
+.btn-ghost{background:transparent; color:var(--text); border:1px solid var(--line);}
+.btn-ghost:hover{border-color:var(--text); transform:translateY(-2px);}
+.btn-ghost:active{transform:translateY(0) scale(.97);}
+.nav-links a,.foot-links a{position:relative;}
+.nav-links a::after,.foot-links a::after{content:""; position:absolute; left:0; bottom:-3px; width:0; height:1px; background:var(--accent); transition:width .25s ease;}
+.nav-links a:hover::after,.foot-links a:hover::after{width:100%;}
+
+/* NAV */
+header{position:fixed; top:0; left:0; right:0; z-index:100; padding:env(safe-area-inset-top,0px) 0 0; transition:background .3s ease, backdrop-filter .3s ease, border-color .3s ease;}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:22px 24px; max-width:1180px; margin:0 auto; border-bottom:1px solid transparent; transition:border-color .3s ease;}
+header.scrolled{background:rgba(11,13,15,.78); backdrop-filter:blur(14px);}
+header.scrolled .nav{border-color:var(--line); padding:14px 24px;}
+.logo{font-family:'Oswald'; font-weight:700; font-size:20px; letter-spacing:.03em;}
+.logo span{color:var(--accent);}
+.nav-links{display:flex; gap:34px; font-family:'Oswald'; font-size:13px; letter-spacing:.08em; text-transform:uppercase;}
+.nav-links a{color:var(--muted); transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{display:none;}
+@media(min-width:860px){.nav-cta{display:inline-flex;}}
+.menu-btn{display:flex; width:40px; height:40px; align-items:center; justify-content:center; border:1px solid var(--line); background:none; color:var(--text); border-radius:2px;}
+@media(min-width:860px){.menu-btn{display:none;} .nav-links{display:flex;}}
+@media(max-width:859px){.nav-links{display:none;}}
+
+/* HERO */
+.hero{min-height:100svh; display:flex; align-items:center; padding:150px 0 90px; position:relative; overflow:hidden;
+  background:linear-gradient(180deg,#0a0c0d 0%,#0e1113 100%); perspective:1400px;}
+.hero-scene{position:absolute; inset:0; z-index:1;}
+.hl-grid{position:absolute; inset:0;
+  background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 64px);
+  opacity:0; animation:hlFade 1s ease .1s forwards;}
+.hl-grid::before,.hl-grid::after{content:""; position:absolute; width:26px; height:26px; border:1px solid rgba(255,90,31,.5);}
+.hl-grid::before{top:18%; left:6%; border-right:none; border-bottom:none;}
+.hl-grid::after{bottom:14%; right:4%; border-left:none; border-top:none;}
+.engine-wrap{position:absolute; right:-6%; top:50%; width:58%; max-width:620px; aspect-ratio:1/1;
+  transform:translateY(-50%) scale(.92); opacity:0; animation:engineIn 1.1s cubic-bezier(.2,.7,.15,1) .25s forwards;}
+@media(max-width:920px){.engine-wrap{right:-20%; width:88%; opacity:.45 !important;}}
+.engine-body{position:absolute; inset:6%; border-radius:18px;
+  background:linear-gradient(115deg, rgba(255,255,255,.06) 0%, transparent 18%, transparent 82%, rgba(255,255,255,.04) 100%),
+    repeating-linear-gradient(90deg, #22272b 0 10px, #2a3035 10px 12px),
+    linear-gradient(160deg,#30363c,#17191c 60%,#0d0f11);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), 0 40px 80px -30px rgba(0,0,0,.8); overflow:hidden;}
+.engine-body::after{content:""; position:absolute; top:-40%; left:-60%; width:60%; height:180%;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.12), transparent);
+  animation:sweepLight 5.5s ease-in-out infinite;}
+.engine-ring{position:absolute; border:2px solid rgba(255,178,89,.4); border-radius:50%; top:50%; left:50%;}
+.engine-ring.r1{width:46%; height:46%; margin:-23% 0 0 -23%;}
+.engine-ring.r2{width:26%; height:26%; margin:-13% 0 0 -13%; border-color:rgba(255,90,31,.6);}
+.engine-core{position:absolute; width:11%; height:11%; top:50%; left:50%; margin:-5.5% 0 0 -5.5%; border-radius:50%;
+  background:var(--accent); box-shadow:0 0 50px 8px rgba(255,90,31,.55);}
+.bolt-dot{position:absolute; width:9px; height:9px; border-radius:50%; background:#0b0d0f; box-shadow:inset 0 0 0 2px #565e65;}
+.bd1{top:9%;left:9%;} .bd2{top:9%;right:9%;} .bd3{bottom:9%;left:9%;} .bd4{bottom:9%;right:9%;}
+.scan-line{position:absolute; left:4%; right:4%; height:1px; top:4%;
+  background:linear-gradient(90deg,transparent,rgba(255,90,31,.75),transparent);
+  box-shadow:0 0 14px 2px rgba(255,90,31,.4); opacity:0; animation:scanMove 6s ease-in-out .9s infinite;}
+.tech-label{position:absolute; font-family:'Oswald',monospace; font-size:10.5px; letter-spacing:.1em; color:var(--muted);
+  opacity:0; white-space:nowrap; animation:labelIn .6s ease forwards;}
+.tech-label::before{content:""; position:absolute; top:50%; width:18px; height:1px; background:rgba(255,90,31,.5); left:-22px;}
+.tl1{top:16%; right:40%; animation-delay:1.1s;} .tl2{top:54%; right:3%; animation-delay:1.25s;} .tl3{bottom:16%; right:28%; animation-delay:1.4s;}
+
+.hotspot{all:unset; position:absolute; width:14px; height:14px; border-radius:50%; background:var(--accent); cursor:pointer; z-index:5; box-sizing:border-box;}
+.hotspot::before{content:""; position:absolute; inset:-8px; border-radius:50%; border:1px solid var(--accent); animation:hsPulse 2.2s ease-out infinite;}
+@keyframes hsPulse{0%{transform:scale(.5); opacity:.9;}100%{transform:scale(2.2); opacity:0;}}
+.hotspot-card{position:absolute; min-width:190px; background:rgba(10,12,13,.95); border:1px solid var(--line); padding:12px 14px; border-radius:4px;
+  opacity:0; transform:translateY(6px); pointer-events:none; transition:opacity .22s ease, transform .22s ease; z-index:6; top:calc(100% + 10px); left:50%; margin-left:-95px;}
+.hotspot-card.show{opacity:1; transform:none;}
+.hotspot-card h4{font-family:'Oswald'; font-size:11.5px; letter-spacing:.1em; color:var(--accent); margin:0 0 4px;}
+.hotspot-card p{font-size:12px; margin:0; color:var(--muted); line-height:1.4;}
+
+.hero-grid{display:grid; grid-template-columns:1fr; gap:52px; align-items:center; position:relative; z-index:3;}
+@media(min-width:920px){.hero-grid{grid-template-columns:1.15fr .85fr;}}
+.title-big{display:block; font-size:clamp(60px,9.5vw,116px); font-weight:700; line-height:1.05; color:var(--text);
+  opacity:0; transform:translateY(24px); animation:titleIn .9s cubic-bezier(.2,.8,.2,1) .55s forwards;}
+.title-sub{display:block; font-size:clamp(19px,2.4vw,28px); font-weight:600; color:var(--muted); margin-top:20px;
+  opacity:0; transform:translateY(18px); animation:titleIn .8s ease .75s forwards;}
+.title-sub em{font-style:normal; color:var(--accent);}
+.hero p.lead{margin-top:22px; font-size:17px; max-width:480px; opacity:0; transform:translateY(16px);
+  animation:titleIn .7s ease .9s forwards;}
+.hero-cta{display:flex; flex-wrap:wrap; gap:16px; margin-top:38px; opacity:0; transform:translateY(16px);
+  animation:titleIn .7s ease 1.05s forwards;}
+@keyframes hlFade{to{opacity:1;}}
+@keyframes engineIn{to{opacity:1; transform:translateY(-50%) scale(1);}}
+@keyframes sweepLight{0%{transform:translateX(0);}50%{transform:translateX(260%);}100%{transform:translateX(0);}}
+@keyframes scanMove{0%{top:4%; opacity:0;}10%{opacity:.85;}50%{top:92%; opacity:.5;}60%{opacity:0;}100%{top:4%; opacity:0;}}
+@keyframes labelIn{to{opacity:1;}}
+@keyframes titleIn{to{opacity:1; transform:none;}}
+.reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1; transform:none;}
+.reveal:nth-child(2){transition-delay:.08s;} .reveal:nth-child(3){transition-delay:.16s;}
+/* 3D tools — mechanical floaters */
+.tool-layer{position:absolute; inset:0; perspective:1000px; pointer-events:none; z-index:1;}
+.floater{position:absolute; transform-style:preserve-3d; will-change:transform;}
+.wrench3d{width:150px; height:26px; top:14%; right:-6%;
+  background:linear-gradient(100deg,#5a6670,#aeb8c2 45%,#5a6670 55%,#2c3339);
+  border-radius:13px; box-shadow:0 20px 40px -10px rgba(0,0,0,.6);
+  animation:spinWrench 9s linear infinite;}
+.wrench3d::before,.wrench3d::after{content:""; position:absolute; top:50%; width:34px; height:34px; border-radius:50%;
+  background:linear-gradient(135deg,#6b7680,#333a40); transform:translateY(-50%); box-shadow:inset 0 0 0 7px #0b0d0f;}
+.wrench3d::before{left:-16px;} .wrench3d::after{right:-16px;}
+@keyframes spinWrench{0%{transform:rotateX(18deg) rotateY(0deg) rotateZ(-18deg) translateZ(0);}
+  50%{transform:rotateX(18deg) rotateY(180deg) rotateZ(-18deg) translateZ(40px);}
+  100%{transform:rotateX(18deg) rotateY(360deg) rotateZ(-18deg) translateZ(0);}}
+.bolt3d{width:46px; height:46px; bottom:10%; left:-3%;
+  background:conic-gradient(from 0deg,#3a4249,#7b8690,#3a4249 25%,#7b8690 50%,#3a4249 75%,#7b8690);
+  clip-path:polygon(25% 2%,75% 2%,100% 50%,75% 98%,25% 98%,0% 50%);
+  box-shadow:0 16px 30px -8px rgba(0,0,0,.7); animation:spinBolt 6s linear infinite;}
+.bolt3d::after{content:""; position:absolute; inset:34%; border-radius:50%; background:#15181b;}
+@keyframes spinBolt{to{transform:rotateY(360deg) rotateX(14deg);}}
+.gear-big{position:absolute; width:260px; height:260px; top:-60px; right:-70px; opacity:.5;
+  animation:spinGear 24s linear infinite;}
+@keyframes spinGear{to{transform:rotate(360deg);}}
+@media(max-width:760px){.wrench3d,.bolt3d{display:none;}}
+
+.scroll-cue{position:absolute; bottom:28px; left:50%; transform:translateX(-50%); font-family:'Oswald'; font-size:11px; letter-spacing:.25em; color:var(--muted); text-transform:uppercase; display:flex; flex-direction:column; align-items:center; gap:10px;}
+.scroll-cue .line{width:1px; height:34px; background:linear-gradient(var(--accent),transparent); animation:cue 1.8s ease-in-out infinite;}
+@keyframes cue{0%{transform:scaleY(0); transform-origin:top;}50%{transform:scaleY(1); transform-origin:top;}50.01%{transform-origin:bottom;}100%{transform:scaleY(0); transform-origin:bottom;}}
+
+/* DIAGNÓSTICO — motor 3D real (WebGL/Three.js), controlado pelo scroll */
+.diag{position:relative; height:320vh; background:#08090a;}
+.diag-stage{position:sticky; top:0; height:100vh; overflow:hidden; transition:opacity .2s ease, transform .2s ease;}
+.diag-canvas{position:absolute; inset:0; width:100%; height:100%; cursor:grab; touch-action:none; display:block;}
+.diag-canvas:active{cursor:grabbing;}
+.diag-readout{position:absolute; left:6%; bottom:9%; max-width:320px; z-index:4; pointer-events:none;}
+.diag-readout h3{font-size:22px; margin:0 0 8px;}
+.diag-readout p{font-size:13.5px;}
+/* Mobile: modelo menor, contido, sem travar o scroll da página */
+@media(max-width:760px){
+  .diag{height:auto; padding:70px 0; display:flex; align-items:center;}
+  .diag-stage{position:relative; height:62vh; min-height:360px; max-height:460px; width:88%; margin:0 auto;
+    border-radius:10px; border:1px solid var(--line); background:#0b0d0f;}
+  .diag-canvas{touch-action:pan-y; border-radius:10px;}
+  .diag-readout{left:5%; right:5%; max-width:none; bottom:5%;}
+  .diag-readout h3{font-size:18px;} .diag-readout p{font-size:12.5px;}
+}
+
+/* SECTION HEAD */
+.sec-head{max-width:640px; margin-bottom:56px;}
+.sec-head h2{font-size:clamp(30px,4.2vw,46px);}
+.sec{padding:110px 0;}
+.sec-alt{background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+
+/* SERVICES — painel técnico interativo */
+.panel-grid{display:grid; grid-template-columns:1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+@media(min-width:860px){.panel-grid{grid-template-columns:.85fr 1.15fr;}}
+.panel-list{display:flex; flex-direction:column; background:var(--bg);}
+.panel-item{all:unset; cursor:pointer; padding:20px 26px; font-family:'Oswald'; font-size:15px; letter-spacing:.02em; text-transform:uppercase;
+  color:var(--muted); border-left:2px solid transparent; transition:all .3s ease; display:flex; align-items:center; gap:14px;}
+.panel-item span{font-size:12px; color:var(--steel); letter-spacing:.1em;}
+.panel-item:hover,.panel-item.active{color:var(--text); border-left-color:var(--accent); background:var(--surface); transform:translateX(4px);}
+.panel-item.active span{color:var(--accent);}
+.panel-display{background:var(--bg2); padding:44px 40px; position:relative; overflow:hidden; min-height:300px; display:flex; flex-direction:column; justify-content:center;}
+.panel-display::before{content:""; position:absolute; inset:0; opacity:.5;
+  background-image:repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 48px);}
+.pd-num{font-family:'Oswald'; font-size:13px; color:var(--accent); letter-spacing:.15em; position:relative; z-index:1;}
+.pd-title{font-size:clamp(26px,3vw,36px); margin:14px 0 14px; position:relative; z-index:1; transition:opacity .25s ease;}
+.pd-desc{font-size:15px; max-width:420px; position:relative; z-index:1; transition:opacity .25s ease;}
+.pd-line{position:absolute; right:30px; bottom:30px; width:120px; height:60px; opacity:.5; z-index:1;}
+
+/* DIFERENCIAIS */
+.diff-grid{display:grid; grid-template-columns:1fr; gap:40px;}
+@media(min-width:780px){.diff-grid{grid-template-columns:repeat(4,1fr);}}
+.diff{border-top:2px solid var(--accent); padding-top:18px;}
+.diff h3{font-size:17px; margin-bottom:10px; font-family:'Inter'; font-weight:600; text-transform:none; letter-spacing:0;}
+.diff p{font-size:14.5px;}
+
+/* PROCESSO — traçado tipo circuito */
+.proc{position:relative;}
+.proc-line{position:absolute; left:19px; top:6px; bottom:6px; width:40px;}
+.proc-line svg{position:absolute; left:-19px; top:0; width:40px; height:100%; overflow:visible;}
+.proc-line .track{fill:none; stroke:var(--line); stroke-width:2;}
+.proc-line .fill{fill:none; stroke:var(--accent); stroke-width:2; stroke-dasharray:1000; stroke-dashoffset:1000; transition:stroke-dashoffset .15s linear;}
+.proc-item{display:flex; gap:28px; padding:26px 0; position:relative;}
+.proc-item .dot{flex:none; width:40px; height:40px; border-radius:50%; background:var(--bg2); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'Oswald'; font-size:14px; color:var(--muted); z-index:2; transition:all .4s ease;}
+.proc-item.in .dot{border-color:var(--accent); color:var(--accent); background:#1a120c; box-shadow:0 0 0 4px rgba(255,90,31,.12);}
+.proc-item h3{font-size:19px; margin-bottom:6px;}
+.proc-item p{font-size:14.5px; max-width:460px;}
+
+/* IMPACT */
+.impact{padding:150px 0; text-align:center; background:
+  radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,90,31,.14), transparent 65%), #0a0b0c;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; position:relative;}
+.impact h2{font-size:clamp(28px,5vw,50px); max-width:780px; margin:0 auto; line-height:1.2; position:relative; z-index:2;}
+.impact h2 em{font-style:normal; color:var(--accent);}
+.impact-bg{position:absolute; inset:0; opacity:.22; z-index:1;}
+.impact-tag{position:absolute; top:18px; left:50%; transform:translateX(-50%); font-family:'Oswald'; font-size:10px; letter-spacing:.15em; color:var(--muted); text-transform:uppercase; z-index:2;}
+
+/* CONTACT */
+.contact-grid{display:grid; grid-template-columns:1fr; gap:48px;}
+@media(min-width:880px){.contact-grid{grid-template-columns:1.1fr .9fr;}}
+.cta-card{background:var(--bg2); border:1px solid var(--line); padding:40px; border-radius:4px;}
+.cta-card h3{font-size:14px; letter-spacing:.1em; color:var(--muted); font-weight:500; margin-bottom:6px; text-transform:uppercase; font-family:'Oswald';}
+.cta-card p.val{font-size:19px; color:var(--text); margin-bottom:26px; font-family:'Inter'; font-weight:500;}
+.cta-card hr{border:none; border-top:1px solid var(--line); margin:22px 0;}
+
+/* FOOTER */
+footer{padding:40px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted);}
+.foot-grid{display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;}
+.foot-links{display:flex; gap:22px; flex-wrap:wrap;}
+.foot-links a:hover{color:var(--text);}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .reveal{transition:none; opacity:1; transform:none;}
+  .scroll-cue .line{animation:none;}
+  .hl-grid,.engine-wrap,.title-big,.title-sub,.hero p.lead,.hero-cta,.tech-label,.scan-line{animation:none !important; opacity:1 !important; transform:none !important;}
+  .engine-wrap{transform:translateY(-50%) !important;}
+  .engine-body::after{display:none;}
+  .diag{height:auto;}
+  .diag-stage{position:relative; height:70vh; min-height:420px; opacity:1 !important; transform:none !important;}
+}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <nav class="nav">
+    <div class="logo">FORÇA <span>DIESEL</span></div>
+    <div class="nav-links">
+      <a href="#inicio">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <a class="btn btn-primary nav-cta" href="#contato">Solicitar orçamento</a>
+    <button class="menu-btn" aria-label="Menu" onclick="document.getElementById('mNav').classList.toggle('open')">☰</button>
+  </nav>
+  <div id="mNav" style="display:none; flex-direction:column; gap:0; background:rgba(11,13,15,.97); border-top:1px solid var(--line);">
+    <a style="padding:16px 24px; border-bottom:1px solid var(--line)" href="#servicos">Serviços</a>
+    <a style="padding:16px 24px; border-bottom:1px solid var(--line)" href="#sobre">Sobre</a>
+    <a style="padding:16px 24px; border-bottom:1px solid var(--line)" href="#diferenciais">Diferenciais</a>
+    <a style="padding:16px 24px" href="#contato">Contato</a>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-scene" id="heroScene">
+    <div class="hero-layer hl-grid" data-depth="3"></div>
+    <div class="engine-wrap" id="engineWrap" data-depth="14">
+      <div class="engine-body">
+        <div class="engine-ring r1"></div><div class="engine-ring r2"></div><div class="engine-core"></div>
+        <span class="bolt-dot bd1"></span><span class="bolt-dot bd2"></span><span class="bolt-dot bd3"></span><span class="bolt-dot bd4"></span>
+        <button class="hotspot" style="top:30%;left:26%;" data-title="Injeção" data-desc="Precisão na alimentação do motor."></button>
+        <button class="hotspot" style="top:60%;left:70%;" data-title="Turbo" data-desc="Desempenho e eficiência."></button>
+        <button class="hotspot" style="top:74%;left:32%;" data-title="Arrefecimento" data-desc="Controle térmico para operação confiável."></button>
+        <div class="hotspot-card" id="hotspotCard"><h4 id="hcTitle"></h4><p id="hcDesc"></p></div>
+      </div>
+      <div class="scan-line"></div>
+      <span class="tech-label tl1">BICO INJETOR · Ø9MM</span>
+      <span class="tech-label tl2">TORQUE 480N·M</span>
+      <span class="tech-label tl3">CÂMARA DE COMBUSTÃO</span>
+      <span style="position:absolute; bottom:-26px; right:4%; font-family:'Oswald'; font-size:10px; letter-spacing:.15em; color:var(--muted); text-transform:uppercase;">Imagem provisória</span>
+    </div>
+    <div class="floater wrench3d" id="fWrench" data-depth="8"></div>
+    <div class="floater bolt3d" id="fBolt" data-depth="6"></div>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow reveal">Mecânica diesel especializada</div>
+      <h1 class="hero-title">
+        <span class="title-big">FORÇA</span>
+        <span class="title-sub">PARA MOVER. <em>PRECISÃO</em> PARA MANTER.</span>
+      </h1>
+      <p class="lead">Diagnóstico e manutenção especializados em motores diesel — da injeção eletrônica à execução, com precisão de oficina técnica.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contato">Solicitar orçamento</a>
+        <a class="btn btn-ghost" href="#servicos">Conhecer serviços</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Role</span><span class="line"></span></div>
+</section>
+
+<section class="diag" id="diagnostico">
+  <div class="diag-stage" id="diagStage">
+    <canvas class="diag-canvas" id="diagCanvas"></canvas>
+    <div class="diag-readout">
+      <span class="eyebrow" id="diagPhase" style="margin-bottom:10px;">MOTOR COMPLETO</span>
+      <h3 id="diagTitle">Explore o motor</h3>
+      <p id="diagDesc">Arraste para girar. Role para aproximar. Toque numa peça para ver detalhes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="servicos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">O que fazemos</div>
+      <h2 class="reveal">Serviços especializados em diesel</h2>
+    </div>
+    <div class="panel-grid reveal">
+      <div class="panel-list" id="panelList">
+        <button class="panel-item active" data-title="Diagnóstico eletrônico" data-desc="Identificação precisa de falhas com equipamento dedicado a sistemas diesel."><span>01</span>Diagnóstico eletrônico</button>
+        <button class="panel-item" data-title="Injeção diesel" data-desc="Manutenção do sistema de injeção com precisão técnica."><span>02</span>Injeção diesel</button>
+        <button class="panel-item" data-title="Motores diesel" data-desc="Manutenção preventiva e corretiva de motores a diesel."><span>03</span>Motores diesel</button>
+        <button class="panel-item" data-title="Freios e suspensão" data-desc="Revisão e manutenção dos sistemas de freio e suspensão, essenciais para segurança."><span>04</span>Freios e suspensão</button>
+        <button class="panel-item" data-title="Revisão preventiva" data-desc="Check-up completo para evitar paradas inesperadas."><span>05</span>Revisão preventiva</button>
+        <button class="panel-item" data-title="Veículos pesados" data-desc="Atendimento especializado para frotas e veículos de grande porte."><span>06</span>Veículos pesados</button>
+      </div>
+      <div class="panel-display">
+        <span class="pd-num" id="pdNum">01 / 06</span>
+        <h3 class="pd-title" id="pdTitle">Diagnóstico eletrônico</h3>
+        <p class="pd-desc" id="pdDesc">Identificação precisa de falhas com equipamento dedicado a sistemas diesel.</p>
+        <svg class="pd-line" viewBox="0 0 120 60"><path d="M0 50 L30 50 L40 20 L60 20 L70 50 L120 50" fill="none" stroke="#ff5a1f" stroke-width="2"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-alt" id="diferenciais" style="overflow:hidden;">
+  <svg class="gear-big" viewBox="0 0 100 100" id="bigGear">
+    <g fill="none" stroke="#ff5a1f" stroke-width="3">
+      <circle cx="50" cy="50" r="30"/>
+      <circle cx="50" cy="50" r="12" fill="#ff5a1f" fill-opacity=".15"/>
+      <g stroke-width="5">
+        <line x1="50" y1="8" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="92"/>
+        <line x1="8" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="92" y2="50"/>
+        <line x1="20" y1="20" x2="27" y2="27"/><line x1="73" y1="73" x2="80" y2="80"/>
+        <line x1="80" y1="20" x2="73" y2="27"/><line x1="27" y1="73" x2="20" y2="80"/>
+      </g>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">Por que a Força Diesel</div>
+      <h2 class="reveal">Confiança que vem da técnica</h2>
+    </div>
+    <div class="diff-grid reveal">
+      <div class="diff"><h3>Atendimento especializado</h3><p>Equipe focada exclusivamente em veículos a diesel, do leve ao pesado.</p></div>
+      <div class="diff"><h3>Diagnóstico preciso</h3><p>Equipamentos dedicados para identificar a causa real do problema, não só o sintoma.</p></div>
+      <div class="diff"><h3>Manutenção preventiva</h3><p>Planos de revisão para reduzir paradas e prolongar a vida útil do motor.</p></div>
+      <div class="diff"><h3>Equipe especializada</h3><p>Profissionais com know-how específico em motores e sistemas diesel.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="sobre">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">Como funciona</div>
+      <h2 class="reveal">Do primeiro contato à entrega</h2>
+    </div>
+    <div class="proc reveal">
+      <div class="proc-line">
+        <svg viewBox="0 0 40 1000" preserveAspectRatio="none">
+          <path class="track" d="M20 0 L20 220 L8 240 L8 480 L32 500 L32 740 L20 760 L20 1000"/>
+          <path class="fill" id="procFill" d="M20 0 L20 220 L8 240 L8 480 L32 500 L32 740 L20 760 L20 1000"/>
+        </svg>
+      </div>
+      <div class="proc-item"><div class="dot">01</div><div><h3>Avaliação</h3><p>Entendemos o problema relatado e o histórico do veículo.</p></div></div>
+      <div class="proc-item"><div class="dot">02</div><div><h3>Diagnóstico</h3><p>Identificação técnica da causa com equipamento especializado.</p></div></div>
+      <div class="proc-item"><div class="dot">03</div><div><h3>Orçamento</h3><p>Proposta clara, sem surpresas, antes de qualquer execução.</p></div></div>
+      <div class="proc-item"><div class="dot">04</div><div><h3>Execução</h3><p>Serviço realizado com precisão e atenção a cada detalhe.</p></div></div>
+      <div class="proc-item"><div class="dot">05</div><div><h3>Entrega</h3><p>Veículo testado e entregue com retorno sobre o que foi feito.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="impact">
+  <svg class="impact-bg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#ff5a1f" stroke-width="2">
+      <circle cx="150" cy="200" r="70"/><circle cx="150" cy="200" r="30"/>
+      <circle cx="650" cy="200" r="90" stroke="#ffb259"/><circle cx="650" cy="200" r="40" stroke="#ffb259"/>
+      <path d="M220 200 H580" stroke-dasharray="6 10"/>
+    </g>
+  </svg>
+  <span class="impact-tag">Imagem provisória</span>
+  <div class="wrap">
+    <h2 class="reveal">Precisão no diagnóstico.<br><em>Força</em> na execução.</h2>
+  </div>
+</section>
+
+<section class="sec" id="contato">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="eyebrow reveal">Contato</div>
+      <h2 class="reveal" style="font-size:clamp(28px,4.2vw,44px); margin-bottom:18px;">Seu veículo precisa de atenção?</h2>
+      <p class="reveal" style="max-width:420px; margin-bottom:30px;">Fale com a Força Diesel e receba uma avaliação especializada do seu veículo a diesel.</p>
+      <a class="btn btn-primary reveal" href="https://wa.me/555484153887" target="_blank" rel="noopener">Falar com a Força Diesel</a>
+    </div>
+    <div class="cta-card reveal">
+      <h3>Telefone</h3><p class="val">+55 54 8415-3887</p>
+      <hr>
+      <h3>Endereço</h3><p class="val">[ENDEREÇO A DEFINIR]</p>
+      <hr>
+      <h3>Horário de atendimento</h3><p class="val">[HORÁRIO A DEFINIR]</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="logo" style="font-size:16px;">FORÇA <span>DIESEL</span></div>
+    <div class="foot-links">
+      <a href="#inicio">Início</a><a href="#servicos">Serviços</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
+      <a href="#">[Instagram]</a><a href="#">[Facebook]</a>
+    </div>
+    <div>© 2026 Força Diesel. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// Nav scroll state
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+}, {passive:true});
+
+// Scroll reveal
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+if(reduced) document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+
+// Hero multi-layer parallax (mouse) — grid, engine and floating tools move at different depths
+const heroEl = document.querySelector('.hero');
+// Engine + grid are driven by scroll (cinematic zoom below); only the floating tools get mouse parallax here.
+const depthEls = heroEl ? [...heroEl.querySelectorAll('[data-depth]')].filter(el=>el.id!=='engineWrap' && !el.classList.contains('hl-grid')) : [];
+if(heroEl && !reduced && depthEls.length){
+  heroEl.addEventListener('mousemove', (e)=>{
+    const r = heroEl.getBoundingClientRect();
+    const cx = (e.clientX - r.left)/r.width - .5;
+    const cy = (e.clientY - r.top)/r.height - .5;
+    depthEls.forEach(el=>{
+      const d = parseFloat(el.dataset.depth);
+      const base = el.id === 'engineWrap' ? 'translateY(-50%) ' : '';
+      el.style.transform = `${base}translate(${cx*d}px, ${cy*d + (el.id==='engineWrap'?0:0)}px)`;
+    });
+  });
+  heroEl.addEventListener('mouseleave', ()=>{
+    depthEls.forEach(el=>{ el.style.transform = el.id==='engineWrap' ? 'translateY(-50%)' : ''; });
+  });
+}
+
+// Hero as a cinematic scene: the engine "approaches the camera" as the user scrolls,
+// layers move at different rates, and the title exits with depth (not a plain fade).
+const engineWrapEl = document.getElementById('engineWrap');
+const gridLayerEl = document.querySelector('.hl-grid');
+const contentEl = document.getElementById('inicio').querySelector('.hero-grid');
+// Release the one-shot entrance animation once it finishes so scroll can drive transform/opacity directly.
+[engineWrapEl, gridLayerEl].forEach(el=>{
+  if(!el) return;
+  el.addEventListener('animationend', ()=>{ el.style.animation = 'none'; }, {once:true});
+});
+function onHeroScroll(){
+  if(!heroEl || reduced) return;
+  const r = heroEl.getBoundingClientRect();
+  const p = Math.max(0, Math.min(1, -r.top / (r.height*0.85)));
+  if(engineWrapEl){
+    const scale = 1 + p*0.55;
+    engineWrapEl.style.transform = `translateY(-50%) scale(${scale})`;
+    engineWrapEl.style.filter = p>0.6 ? `blur(${(p-0.6)*9}px) brightness(${1-p*0.3})` : `brightness(${1-p*0.15})`;
+    engineWrapEl.style.opacity = String(1 - Math.max(0, p-0.75)*4);
+  }
+  if(gridLayerEl){
+    gridLayerEl.style.transform = `translateY(${p*-50}px) scale(${1+p*0.18})`;
+    gridLayerEl.style.opacity = String(1 - p*0.7);
+  }
+  if(contentEl){
+    contentEl.style.transform = `translateY(${p*-70}px) scale(${1-p*0.08}) rotateX(${p*7}deg)`;
+    contentEl.style.transformOrigin = 'left center';
+    contentEl.style.opacity = String(Math.max(0, 1 - p*1.3));
+  }
+}
+window.addEventListener('scroll', onHeroScroll, {passive:true});
+onHeroScroll();
+
+// Process line fill — circuit path "traced" by scroll
+const procSection = document.querySelector('.proc');
+const procFill = document.getElementById('procFill');
+const procLen = procFill ? procFill.getTotalLength() : 0;
+if(procFill){ procFill.style.strokeDasharray = procLen; procFill.style.strokeDashoffset = procLen; }
+const procItems = document.querySelectorAll('.proc-item');
+function onScrollProc(){
+  if(!procSection) return;
+  const r = procSection.getBoundingClientRect();
+  const vh = window.innerHeight;
+  let p = (vh*0.75 - r.top) / r.height;
+  p = Math.max(0, Math.min(1, p));
+  if(procFill) procFill.style.strokeDashoffset = String(procLen * (1 - p));
+  procItems.forEach((it,i)=>{
+    if(p > i/procItems.length) it.classList.add('in');
+  });
+}
+window.addEventListener('scroll', onScrollProc, {passive:true});
+onScrollProc();
+
+// Scroll-linked rotation for 3D floating tools + big gear
+const wrenchEl = document.getElementById('fWrench');
+const boltEl = document.getElementById('fBolt');
+const bigGearEl = document.getElementById('bigGear');
+function onScroll3D(){
+  const y = window.scrollY;
+  if(wrenchEl && !reduced) wrenchEl.style.transform = `rotateX(18deg) rotateY(${y*0.35}deg) rotateZ(-18deg)`;
+  if(boltEl && !reduced) boltEl.style.transform = `rotateY(${-y*0.5}deg) rotateX(${y*0.15}deg)`;
+  if(bigGearEl && !reduced) bigGearEl.style.transform = `rotate(${y*0.12}deg)`;
+}
+window.addEventListener('scroll', onScroll3D, {passive:true});
+onScroll3D();
+
+// Diagnóstico — motor diesel em 3D real (Three.js/WebGL): giro por arraste, zoom pelo scroll, peças clicáveis
+(function(){
+  const canvas = document.getElementById('diagCanvas');
+  if(!canvas || typeof THREE === 'undefined') return;
+  const stage = document.getElementById('diagStage');
+  const section = document.getElementById('diagnostico');
+  const phaseEl = document.getElementById('diagPhase');
+  const titleEl = document.getElementById('diagTitle');
+  const descEl = document.getElementById('diagDesc');
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  const isSmallScreen = window.matchMedia('(max-width:760px)').matches;
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:!isSmallScreen});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isSmallScreen?1.5:2));
+  scene.add(new THREE.AmbientLight(0x404048,1.3));
+  const key = new THREE.DirectionalLight(0xffffff,1.2); key.position.set(3,4,5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xff8a4a,0.7); rim.position.set(-4,-1,-3); scene.add(rim);
+
+  const metal = (c,m,r)=> new THREE.MeshStandardMaterial({color:c, metalness:m, roughness:r});
+  const engine = new THREE.Group();
+
+  const block = new THREE.Mesh(new THREE.BoxGeometry(2.3,1.5,1.7), metal(0x30363c,0.6,0.45));
+  block.userData = {name:'Bloco do motor', desc:'Estrutura principal onde os cilindros operam.'};
+  engine.add(block);
+
+  [-0.7,0,0.7].forEach(x=>{
+    const c = new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.22,0.5,28), metal(0x3a4249,0.8,0.3));
+    c.position.set(x,1.0,0);
+    c.userData = {name:'Cilindro', desc:'Câmara de combustão de alta precisão.'};
+    engine.add(c);
+  });
+
+  const turboHousing = new THREE.Mesh(new THREE.SphereGeometry(0.42,28,28), metal(0x4a5560,0.85,0.25));
+  turboHousing.scale.set(1,0.8,1); turboHousing.position.set(1.65,0.25,0);
+  turboHousing.userData = {name:'Turbina', desc:'Aumenta a eficiência e a potência do motor.'};
+  engine.add(turboHousing);
+  const turboPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.16,0.16,0.7,20), metal(0x3a4249,0.8,0.3));
+  turboPipe.rotation.z = Math.PI/2; turboPipe.position.set(2.15,0.25,0);
+  turboPipe.userData = {name:'Turbina', desc:'Aumenta a eficiência e a potência do motor.'};
+  engine.add(turboPipe);
+
+  const injector = new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.1,0.75,20), metal(0xd8dde1,0.9,0.15));
+  injector.position.set(0,1.45,0);
+  injector.userData = {name:'Bico injetor', desc:'Controla a alimentação de combustível com precisão milimétrica.'};
+  engine.add(injector);
+
+  const gear = new THREE.Mesh(new THREE.TorusGeometry(0.46,0.09,10,28), metal(0x4a5560,0.85,0.3));
+  gear.rotation.x = Math.PI/2; gear.position.set(-1.0,-0.2,1.15);
+  gear.userData = {name:'Engrenagem de distribuição', desc:'Sincroniza o funcionamento mecânico do motor.'};
+  engine.add(gear);
+
+  scene.add(engine);
+
+  let dragging=false, lastX=0, lastY=0, dragRotY=0, dragRotX=0;
+  canvas.addEventListener('pointerdown', e=>{ dragging=true; lastX=e.clientX; lastY=e.clientY; canvas.setPointerCapture(e.pointerId); canvas.style.cursor='grabbing'; });
+  canvas.addEventListener('pointerup', ()=>{ dragging=false; canvas.style.cursor='grab'; });
+  canvas.addEventListener('pointerleave', ()=>{ dragging=false; });
+
+  const ray = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  let hovered = null;
+  function hoverCheck(e){
+    const r = canvas.getBoundingClientRect();
+    mouse.x = ((e.clientX-r.left)/r.width)*2-1;
+    mouse.y = -((e.clientY-r.top)/r.height)*2+1;
+    ray.setFromCamera(mouse, camera);
+    const hit = ray.intersectObjects(engine.children)[0];
+    const obj = hit ? hit.object : null;
+    if(obj !== hovered){
+      if(hovered && hovered.material.emissive) hovered.material.emissive.set(0x000000);
+      hovered = obj;
+      if(!dragging) canvas.style.cursor = obj ? 'pointer' : 'grab';
+      if(hovered && hovered.material.emissive) hovered.material.emissive.set(0x331400);
+    }
+  }
+  canvas.addEventListener('pointermove', e=>{
+    if(dragging){
+      dragRotY += (e.clientX-lastX)*0.006;
+      dragRotX = Math.max(-0.5,Math.min(0.5, dragRotX + (e.clientY-lastY)*0.004));
+      lastX=e.clientX; lastY=e.clientY;
+    }
+    hoverCheck(e);
+  });
+  canvas.addEventListener('click', ()=>{
+    if(hovered && hovered.userData.name){
+      phaseEl.textContent = 'PEÇA SELECIONADA';
+      titleEl.textContent = hovered.userData.name;
+      descEl.textContent = hovered.userData.desc;
+    }
+  });
+
+  const isMobile = window.matchMedia('(max-width:760px)').matches;
+  const camStart = isMobile ? new THREE.Vector3(0,0.3,8.2) : new THREE.Vector3(0,0.4,6.2);
+  const camMid = new THREE.Vector3(1.1,0.6,3.4), camInj = new THREE.Vector3(0.15,1.15,1.7);
+  const lookStart = new THREE.Vector3(0,0.3,0), lookInj = new THREE.Vector3(0,1.3,0);
+  const targetCam = camStart.clone(), targetLook = lookStart.clone();
+  camera.position.copy(camStart);
+  let baseRotY = isMobile ? 0.5 : 0;
+  function onDiagScroll(){
+    if(!section) return;
+    const r = section.getBoundingClientRect();
+    const total = Math.max(r.height - window.innerHeight, 1);
+    const p = Math.max(0, Math.min(1, -r.top/total));
+    if(p < 0.25){ targetCam.copy(camStart); targetLook.copy(lookStart); baseRotY = p*1.2; if(!hovered) phaseEl.textContent='MOTOR COMPLETO'; }
+    else if(p < 0.5){ targetCam.lerpVectors(camStart,camMid,(p-0.25)/0.25); targetLook.copy(lookStart); baseRotY = 0.3+(p-0.25)*2; if(!hovered) phaseEl.textContent='APROXIMANDO'; }
+    else if(p < 0.85){ targetCam.lerpVectors(camMid,camInj,(p-0.5)/0.35); targetLook.lerpVectors(lookStart,lookInj,(p-0.5)/0.35); baseRotY = 0.9-(p-0.5)*0.6; if(!hovered) phaseEl.textContent = p<0.7?'GIRANDO O MODELO':'SISTEMA DE INJEÇÃO'; }
+    else { targetCam.copy(camInj); targetLook.copy(lookInj); baseRotY = 0.69; if(!hovered){ phaseEl.textContent='BICO INJETOR'; titleEl.textContent='Bico injetor'; descEl.textContent='Controla a alimentação de combustível com precisão milimétrica.'; } }
+    if(p < 0.75 && !hovered){ titleEl.textContent='Explore o motor'; descEl.textContent='Arraste para girar. Role para aproximar. Toque numa peça para ver detalhes.'; }
+    const exitP = Math.max(0,(p-0.9)/0.1);
+    stage.style.opacity = String(1-exitP*0.6);
+    stage.style.transform = `translateY(${exitP*-30}px)`;
+  }
+  if(!reduced && !isMobile) window.addEventListener('scroll', onDiagScroll, {passive:true});
+  if(isMobile){ phaseEl.textContent='MOTOR DIESEL'; titleEl.textContent='Explore o motor'; descEl.textContent='Arraste para girar. Toque numa peça para ver detalhes.'; }
+  else onDiagScroll();
+
+  function resize(){
+    const r = stage.getBoundingClientRect();
+    if(r.width<=0||r.height<=0) return;
+    camera.aspect = r.width/r.height; camera.updateProjectionMatrix();
+    renderer.setSize(r.width, r.height, false);
+  }
+  window.addEventListener('resize', resize); resize();
+
+  function animate(){
+    requestAnimationFrame(animate);
+    camera.position.lerp(targetCam, 0.07);
+    camera.lookAt(targetLook);
+    engine.rotation.y += ((baseRotY+dragRotY) - engine.rotation.y)*0.08;
+    engine.rotation.x += (dragRotX - engine.rotation.x)*0.08;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+// Engine hotspots — click/tap to reveal technical info
+const hotspotCard = document.getElementById('hotspotCard');
+const hcTitle = document.getElementById('hcTitle');
+const hcDesc = document.getElementById('hcDesc');
+document.querySelectorAll('.hotspot').forEach(hs=>{
+  hs.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const open = hotspotCard.classList.contains('show') && hcTitle.textContent === hs.dataset.title;
+    hs.parentElement.appendChild(hotspotCard);
+    hotspotCard.style.left = hs.style.left; hotspotCard.style.top = `calc(${hs.style.top} + 22px)`;
+    hcTitle.textContent = hs.dataset.title; hcDesc.textContent = hs.dataset.desc;
+    hotspotCard.classList.toggle('show', !open);
+  });
+});
+document.addEventListener('click', ()=> hotspotCard && hotspotCard.classList.remove('show'));
+
+// Services technical panel — hover/click updates the display
+const panelItems = document.querySelectorAll('.panel-item');
+const pdTitle = document.getElementById('pdTitle');
+const pdDesc = document.getElementById('pdDesc');
+const pdNum = document.getElementById('pdNum');
+panelItems.forEach((item,i)=>{
+  const activate = ()=>{
+    panelItems.forEach(p=>p.classList.remove('active'));
+    item.classList.add('active');
+    pdTitle.style.opacity = '0'; pdDesc.style.opacity = '0';
+    setTimeout(()=>{
+      pdTitle.textContent = item.dataset.title;
+      pdDesc.textContent = item.dataset.desc;
+      pdNum.textContent = String(i+1).padStart(2,'0') + ' / 06';
+      pdTitle.style.opacity = '1'; pdDesc.style.opacity = '1';
+    }, 140);
+  };
+  item.addEventListener('click', activate);
+  item.addEventListener('mouseenter', ()=>{ if(window.matchMedia('(hover:hover)').matches) activate(); });
+});
+</script>
+</body>
+</html>
